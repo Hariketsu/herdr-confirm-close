@@ -37,10 +37,10 @@ Read ~/.config/herdr-app/AGENTS.md, then add this mod: https://github.com/Harike
 
 改过 `keys.json` 之后，Herdr 升级时不会再往里加新的默认快捷键。
 
-## 受限导致的 UI/UX 表现
+## 已知限制
 
 - 点 tab 或 pane 标题栏上的 `×`、在命令面板里执行关闭，不会弹确认框。
-- 关 space 里最后一个 pane 或 tab 时，会询问 "Close space?"，因为关掉它就是关掉整个 space。
+- 关 space 里最后一个 pane 或 tab 时，问的是 "Close space?"，因为关掉它就是关掉整个 space。
 
 ## 它会做什么
 
