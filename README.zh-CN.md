@@ -1,31 +1,51 @@
-# herdr-confirm-close
+# Confirm Close
 
 [English](README.md) · 中文
 
+这个 mod 让 Herdr 先问一句，用快捷键关 pane 或 tab 之前，先弹一个确认框。Enter 关闭，Esc 取消。
+
 ![Confirm Close](preview.png)
 
-Herdr App 的两个小 mod：用快捷键关闭 pane 或 tab 前先弹出确认框。Herdr 自带的 `pane.close` / `tab.close` 不会确认，只有关掉 space 的最后一个 tab 时才问。
+Herdr 按下快捷键会直接关 pane 和 tab，只有在关 space 的最后一个 tab 时才会问。要是手滑按一下 cmd-w，正在跑的 agent 就没了。
 
-| 快捷键 | 确认框 | 确认后 |
+## 快捷键是对调的
+
+| 快捷键 | Herdr 默认 | 装了这个 mod |
 | --- | --- | --- |
-| `cmd-w` | Close pane?（`程序名 — 文件夹`） | `pane.close` |
-| `cmd-shift-w` | Close tab?（`tab 名 — N panes`） | `tab.close` |
+| `cmd-w` | 关 tab | 确认后关 pane |
+| `cmd-shift-w` | 关 pane | 确认后关 tab |
 
-对话框用的是 Herdr 自带的 `confirm` mod，尺寸和文案格式跟 Herdr 自己的 "Close space?" 一致。Enter 确认，Esc 取消。
+`cmd-w` 关 pane 是多数终端的习惯。想保留 Herdr 原来的键位，就只装确认框（见下）。
 
 ## 安装
 
-让你的 Herdr agent 添加 `herdr.dev/mods/Hariketsu/herdr-confirm-close`，或者手动安装：
+跟你的 Herdr agent 说：
 
-1. 把 `mods/ask-close-pane`、`mods/ask-close-tab` 复制到 `~/.config/herdr-app/mods/`。
-2. 把 `keys.json` 里的两行合并进 `~/.config/herdr-app/keys.json` 的 `global`（替换 Herdr 默认的 `cmd-w` / `cmd-shift-w`）。
-3. `herdr-app check ~/.config/herdr-app/mods/ask-close-pane`，`ask-close-tab` 同样。
+```
+Read ~/.config/herdr-app/AGENTS.md, then add this mod: https://github.com/Hariketsu/herdr-confirm-close/tree/main
+```
 
-## 没覆盖到的
+它会问你要对调键位，还是只要确认框。
 
-- 鼠标点 pane 标题栏或 tab 上的 `×`、命令面板直接执行 `pane.close` / `tab.close`，仍不确认。
-- Herdr 不允许关掉 space 的最后一个 pane，这时确认后没反应；关 space 用 `cmd-shift-w`，Herdr 会再问一次 "Close space?"。
+手动安装：
+
+1. 把 `mods/ask-close-pane` 和 `mods/ask-close-tab` 复制到 `~/.config/herdr-app/mods/`。
+2. 在 `~/.config/herdr-app/keys.json` 的 `global` 里加上其中一组：
+   - 对调键位（跟本仓库的 `keys.json` 一样）：`"cmd-w": "mod.open:ask-close-pane"`、`"cmd-shift-w": "mod.open:ask-close-tab"`
+   - 只要确认框：`"cmd-w": "mod.open:ask-close-tab"`、`"cmd-shift-w": "mod.open:ask-close-pane"`
+3. 对两个文件夹分别跑一次 `herdr-app check`。
+
+改过 `keys.json` 之后，Herdr 升级时不会再往里加新的默认快捷键。
+
+## 受限导致的 UI/UX 表现
+
+- 点 tab 或 pane 标题栏上的 `×`、在命令面板里执行关闭，不会弹确认框。
+- 关 space 里最后一个 pane 或 tab 时，会询问 "Close space?"，因为关掉它就是关掉整个 space。
+
+## 它会做什么
+
+只读取当前聚焦的 pane 或 tab，你确认后执行 `pane.close` 或 `tab.close`。
 
 ## 卸载
 
-删掉两个 mod 文件夹，把 `keys.json` 里两行改回 `"cmd-w": "tab.close"`、`"cmd-shift-w": "pane.close"`（Herdr 默认）。
+删掉两个文件夹，把快捷键改回去：`"cmd-w": "tab.close"`、`"cmd-shift-w": "pane.close"`。
