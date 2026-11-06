@@ -1,6 +1,7 @@
 {
   "global": {
     "cmd-w": "mod.open:ask-close-pane",
-    "cmd-shift-w": "mod.open:ask-close-tab"
+    "cmd-shift-w": "mod.open:ask-close-tab",
+    "cmd-q": "mod.open:ask-quit"
   }
 }
